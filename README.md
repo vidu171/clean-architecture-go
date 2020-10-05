@@ -1,2 +1,3 @@
-# clean-architecture-go
-Implementation of clean architecture in GO lang
+# Clean Architecture GO
+My Implementation of clean architecture in GO lang
+
