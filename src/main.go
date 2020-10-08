@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/vidu171/clean-architecture-go/infrastructure/db"
@@ -10,27 +11,25 @@ import (
 
 	"github.com/vidu171/clean-architecture-go/interface/controllers"
 
-	"github.com/vidu171/clean-architecture-go/infrastructure/logger"
 	"github.com/vidu171/clean-architecture-go/infrastructure/router"
 	"github.com/vidu171/clean-architecture-go/interface/repository"
 )
 
 var (
 	httpRouter router.Router = router.NewMuxRouter()
-	Logger                   = logger.Logger{}
 	dbHandler  db.DBHandler
 )
 
 func getBookController() controllers.BookController {
 	bookRepo := repository.NewBookRepo(dbHandler)
-	bookInteractor := usecases.NewBookInteractor(bookRepo, Logger)
+	bookInteractor := usecases.NewBookInteractor(bookRepo)
 	bookController := controllers.NewBookController(bookInteractor)
 	return *bookController
 }
 
 func getAuthorController() controllers.AuthorController {
 	authorRepo := repository.NewAuthorRepo(dbHandler)
-	authorInteractor := usecases.NewAuthorInteractor(authorRepo, Logger)
+	authorInteractor := usecases.NewAuthorInteractor(authorRepo)
 	authorController := controllers.NewAuthorController(authorInteractor)
 	return *authorController
 }
@@ -43,7 +42,7 @@ func main() {
 	var err error
 	dbHandler, err = db.NewDBHandler("mongodb://localhost:27017", "bookstore")
 	if err != nil {
-		Logger.Log("Unable to connect to the DataBase")
+		log.Println("Unable to connect to the DataBase")
 		return
 	}
 	bookController := getBookController()
