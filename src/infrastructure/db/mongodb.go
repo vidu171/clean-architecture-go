@@ -59,9 +59,9 @@ func (dbHandler DBHandler) SaveBook(book domain.Book) error {
 	}
 	return nil
 }
-func (dbHandler DBHandler) SaveCustomer(customer domain.Customer) error {
-	collection := dbHandler.database.Collection("books")
-	_, err := collection.InsertOne(context.TODO(), customer)
+func (dbHandler DBHandler) SaveAuthor(author domain.Author) error {
+	collection := dbHandler.database.Collection("authors")
+	_, err := collection.InsertOne(context.TODO(), author)
 	if err != nil {
 		return err
 	}

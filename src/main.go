@@ -28,11 +28,11 @@ func getBookController() controllers.BookController {
 	return *bookController
 }
 
-func getCustomerController() controllers.CustomerController {
-	customerRepo := repository.NewCustomerRepo(dbHandler)
-	customerInteractor := usecases.NewCustomerInteractor(customerRepo, Logger)
-	customerController := controllers.NewCustomerController(customerInteractor)
-	return *customerController
+func getAuthorController() controllers.AuthorController {
+	authorRepo := repository.NewAuthorRepo(dbHandler)
+	authorInteractor := usecases.NewAuthorInteractor(authorRepo, Logger)
+	authorController := controllers.NewAuthorController(authorInteractor)
+	return *authorController
 }
 
 func main() {
@@ -47,9 +47,9 @@ func main() {
 		return
 	}
 	bookController := getBookController()
-	customerController := getCustomerController()
+	authorController := getAuthorController()
 	httpRouter.POST("/book/add", bookController.Add)
 	httpRouter.GET("/book", bookController.FindAll)
-	httpRouter.POST("/customer/add", customerController.Add)
+	httpRouter.POST("/author/add", authorController.Add)
 	httpRouter.SERVE(":8000")
 }
