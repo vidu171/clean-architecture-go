@@ -1,0 +1,9 @@
+package repository
+
+import "github.com/vidu171/clean-architecture-go/domain"
+
+type DBHandler interface {
+	FindAllBooks() ([]*domain.Book, error)
+	SaveBook(book domain.Book) error
+	SaveCustomer(customer domain.Customer) error
+}
